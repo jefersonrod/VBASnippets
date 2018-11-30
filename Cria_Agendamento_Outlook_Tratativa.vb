@@ -26,6 +26,7 @@ Dim colResponsavel As Integer
 Dim colEmailDest As Integer
 Dim colStatusAcao As Integer
 Dim colDataRetorno As Integer
+Dim colHoraRetorno As Integer
 
 Dim loja As String
 Dim cp As String
@@ -37,7 +38,7 @@ Dim possibilidade As String
 Dim responsavel As String
 Dim statusacao As String
 Dim dataretorno As Date
-
+Dim horaretorno As Date
 
 Dim corAzulMarinho As String
 
@@ -73,8 +74,9 @@ colStatusMX = 6
 colSituacao = 8
 colPossibilidade = 9
 colResponsavel = 10
-colEmailDest = 16
+colEmailDest = 17
 colDataRetorno = 15
+colHoraRetorno = 16
 colStatusAcao = 13
 
 'get atual
@@ -89,6 +91,7 @@ If (Worksheets(plan).Cells(linhaAtual, colEmailDest) = "") Then
 Else
     loja = Worksheets(plan).Cells(linhaAtual, colLoja)
     dataretorno = Worksheets(plan).Cells(linhaAtual, colDataRetorno)
+    horaretorno = Worksheets(plan).Cells(linhaAtual, colHoraRetorno)
     statusacao = Worksheets(plan).Cells(linhaAtual, colStatusAcao)
     'emaildest = Worksheets(plan).Cells(linhaAtual, colEmailDest)
     'MsgBox (linhaAtual)
@@ -144,16 +147,17 @@ Set olAppItem = olApp.CreateItem(olAppointmentItem)
         .Recipients.Add (emaildest)
             'On Error Resume Next
         '.Start = #11/26/2018 9:00:00 AM#
-        .Start = dataretorno + "09:00:00 AM"
+        '.Start = dataretorno
+        .Start = dataretorno + horaretorno
         .Duration = 90
         'myItem.End = DateValue(dataretorno) + "10:00:00 AM"
         .Subject = assunto
             '.Attachments.Add ("c:\temp\somefile.msg")
-            '.Location = Cells(r, 3).Value
+        .Location = "Telefone"
             '.Body = .Subject & ", " & Cells(r, 4).Value
         .BusyStatus = olBusy
         .Categories = "Tratativas reativação" ' add this to be able to delete the testappointments
-        '.Display 'show appointment
+        .Display 'show appointment
         .Save ' saves the new appointment to the default folder
         .Send
         
@@ -161,7 +165,7 @@ Set olAppItem = olApp.CreateItem(olAppointmentItem)
         
 'Set olAppItem = Nothing
 'Set olApp = Nothing
-MsgBox "Done !"
+'MsgBox "Done !"
     
 'change color of the loja (colunm 1) to mark as sent
 Worksheets(plan).Cells(linhaAtual, colEmailDest).Font.Color = corAzulMarinho

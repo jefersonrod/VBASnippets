@@ -22,10 +22,9 @@ Dim mailTotalCount As String
 Dim mailItemCount As Integer
 Dim mailFoundCount As Integer
 Dim pastaCxEntrada As String
-Dim log As Boolean
-Dim timercron As Boolean
-Dim StartTime As Double
-Dim SecondsElapsed As Double
+Dim log As Boolean 'enable Log
+Dim timercron As Boolean 'enable timer
+Dim ExitFor2laco As Boolean 'flag to exit of second For, avoid keep searching on inbox after found
 
 Dim Found As Boolean
 Dim showEMail As Boolean
@@ -76,8 +75,10 @@ Set myInbox = myNameSpace.GetDefaultFolder(olFolderInbox)
 'feed general variables
 plan = "Buscar"
 Found = False
+ExitFor2laco = False
 linLoja = FunctionsBuscaRelatFotog.linha_Atual
 corVermelho = RGB(255, 0, 0)
+
 
 'feed position variables
 colLoja = 1
@@ -125,9 +126,9 @@ mailTotalCount = olFldr.Items.count
 Worksheets(plan).Cells(linmailTotalCount, colmailTotalCount) = mailTotalCount
 
 'set path for developers test text log
-ArqvLog = "logSubject.txt"
-Drive = "C:\temp\"
-FullArqvLog = Drive + ArqvLog
+'ArqvLog = "logSubject.txt"
+'Drive = "C:\temp\"
+'FullArqvLog = Drive + ArqvLog
 'Open FullArqvLog For Append As #1
 
 'check for some fields are filled
@@ -171,10 +172,14 @@ For Each myitem In myitems
                     Worksheets(plan).Cells(linTimerShow, colTimerShow + 1) = "segundos executando"
                 End If
                 'exit from search
+                ExitFor2laco = True
                 Exit For
                 End If
            Next
         End If
+    End If
+    If (ExitFor2laco) Then
+        Exit For
     End If
 Next myitem
 Worksheets(plan).Cells(linmailItemCount, colmailItemCount) = mailFoundCount 'update final count item found
@@ -194,6 +199,7 @@ If Not Found Then
         time3 = DateDiff("s", time1, time2)
         Worksheets(plan).Cells(linTimerShow, colTimerShow) = CStr(time3)
         Worksheets(plan).Cells(linTimerShow, colTimerShow + 1) = "segundos executando"
+        
     End If
 End If
 
@@ -201,3 +207,4 @@ End If
 Set myOlApp = Nothing
   
 End Sub
+

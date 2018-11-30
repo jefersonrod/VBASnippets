@@ -27,6 +27,8 @@ Do Until (Worksheets(plan).Cells(linhaAtual, colLoja) = "")
         Search4MailOutlook.Search4MailOutlook
         estTime = (Worksheets(plan).Cells(linhaAtual, colSegs) * qtdeLinhas)
         Worksheets(plan).Cells(linhaFinal, colLoja) = "Tempo estimado para conclusão: " + CStr(estTime) + " segundos"
+        Worksheets(plan).Cells(linhaFinal, colLoja).HorizontalAlignment = xlLeft
+        
     Loop
     linhaAtual = linhaAtual + 1
 Loop
