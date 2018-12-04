@@ -2,18 +2,20 @@ Sub Insere_Agora()
     
     ' insere a data e hora atual e notificação E-mail ao enviar
     
-    Dim linhaatual As Integer
+    Dim linhaAtual As Integer
+    Dim plan As String
     
-    linhaatual = linha_Atual.linha_Atual
+    linhaAtual = linha_Atual.linha_Atual 'chama função para obter a linha atual
+    plan = ActualSheetName 'obtem o nome da planilha atual
     
-    If (Worksheets(1).Cells(linhaatual, 3) <> "") Then
+    If (Worksheets(plan).Cells(linhaAtual, 3) <> "") Then
     
-        Worksheets(1).Cells(linhaatual, 1) = Date
-        Worksheets(1).Cells(linhaatual, 2) = Time
+        Worksheets(plan).Cells(linhaAtual, 1) = Date
+        Worksheets(plan).Cells(linhaAtual, 2) = Time
         
         ' Worksheets(1).Cells(addr_lin, 7) = "E-mail"
         
-        Functions.CreateStatusHTML
+        CreateStatusHTML
     Else
         MsgBox ("Preencha o campo numero da loja primeiro")
         
