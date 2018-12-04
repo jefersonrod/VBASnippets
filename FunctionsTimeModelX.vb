@@ -10,14 +10,16 @@ Public Function CopyText(Text As String)
 End Function
 
 Public Function Username() As String
+'Get username from computer
     Dim name As String
-    name = Mid(Application.Username, 9)
-    name = Replace(name, ".", "")
-    'MsgBox "Current user is " & name
+    name = Mid(Application.Username, 9) 'remove prefix
+    name = Replace(name, ".", "") 'remove dot
+    
     Username = name
 End Function
 
 Public Function CreateStatusHTML()
+'Send values via endpoint to status server for update attendance status
 'set vars
 Dim nl As String
 Dim linhaAtual As Integer
@@ -65,9 +67,11 @@ dia = Replace(dia, "/", "%2F")
 hora = Time
 hora = Replace(hora, ":", "%3A")
 
+'build url get string
 urlGet = urlAdd + "/add/" + col + "/" + analista + "/" + loja + "/" + dia + "/" + hora
 Debug.Print urlGet
 
+'check if url is online
 If (checkServer(urlAdd)) Then
     'MsgBox ("OK")
     With CreateObject("MSXML2.XMLHTTP")
@@ -79,13 +83,12 @@ Else
     MsgBox ("Error 404" + nl + "Server Down" + nl + "Plz check")
 End If
 
-
-
-Debug.Print sJSONString
+'Debug.Print sJSONString
 
 End Function
 
 Public Function EmptyStatusHTML()
+'Send values via endpoint to status server for update available status
 'set vars
 Dim nl As String
 Dim linhaAtual As Integer
@@ -121,10 +124,11 @@ urlDisp = "http://" + server + ":" + port
 col = CheckAnalystID
 analista = Username
 
-'MsgBox (col + vbCrLf + analista + vbCrLf + loja + vbCrLf + dia + vbCrLf + hora)
+'build url string
 urlGet = urlDisp + "/disp/" + col + "/" + analista
 Debug.Print urlGet
 
+'check if server is available
 If (checkServer(urlDisp)) Then
     'MsgBox ("OK")
     With CreateObject("MSXML2.XMLHTTP")
@@ -136,16 +140,18 @@ Else
     MsgBox ("Error 404" + nl + "Server Down" + nl + "Plz check")
 End If
 
-Debug.Print sJSONString
+'Debug.Print sJSONString
     
 End Function
 
 Public Function ActualSheetName() As String
+'Get actual sheet name
 Dim sheetName
 sheetName = ActiveSheet.name
-ActualSheetName = sheetName
+ActualSheetName = sheetName    'return sheet name
 End Function
 Public Function CheckAnalystID() As String
+'get colid from analyst
 Dim analista As String
 Dim linhaProcurar As Integer
 Dim col As String
@@ -163,12 +169,13 @@ linhaProcurar = 3
 Do While (Worksheets("config.ini").Cells(linhaProcurar, colPlan) <> analista)
     linhaProcurar = linhaProcurar + 1
 Loop
-col = Worksheets("Config.ini").Cells(linhaProcurar, colColID)
+col = Worksheets("Config.ini").Cells(linhaProcurar, colColID) 'return col number
 CheckAnalystID = col
 
 End Function
 
 Public Function CheckAnalystLine() As Integer
+'get analyst config line for use colunm parameters
 Dim analista As String
 Dim linhaProcurar As Integer
 
@@ -186,17 +193,19 @@ Do While (Worksheets("config.ini").Cells(linhaProcurar, colPlan) <> analista)
     
     linhaProcurar = linhaProcurar + 1
 Loop
-CheckAnalystLine = linhaProcurar
+CheckAnalystLine = linhaProcurar 'return line value
 
 End Function
 
 Public Function GetUserLogged() As String
+'get user logged in computer
 Dim userlogged As String
 userlogged = Environ$("UserName")
 GetUserLogged = userlogged
 End Function
 
 Public Function checkServer(Url As String) As Boolean
+'function to check url online
 Dim Request As Object
 Dim ff As Integer
 Dim rc As Variant

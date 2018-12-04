@@ -16,13 +16,12 @@ Sub Chama_ac_remoto()
     str_num_ip = Worksheets(plan).Cells(linhaAtual, 11)
     
     ' verifica se o campo de end ip foi preenchido
-    
     If str_num_ip = "" Then MsgBox ("Preencher o campo IP antes de fazer acesso remoto"): End
     
     ' desabilita o forefront
     'Z = Shell("C:\Program Files\Forefront TMG Client\fwctool.exe disable", vbHide)
     
-    ' abre o bloco de notas com o texto criado
+    ' abre o acesso remoto do landesk
     x = Shell("C:\Program Files\LANDesk\ManagementSuite\isscntr.exe" & " " & "/a" & str_num_ip, vbNormalNoFocus)
     
 End Sub

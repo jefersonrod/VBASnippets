@@ -16,14 +16,14 @@ Sub Chama_ac_remoto_transferfile()
     str_num_ip = Worksheets(plan).Cells(linhaAtual, 11)
     
    ' verifica se o campo de end ip foi preenchido
-    
     If str_num_ip = "" Then MsgBox ("Preencher o campo IP antes de fazer acesso remoto"): End
    
    
     ' desabilita o forefront
     ' Z = Shell("C:\Program Files\Forefront TMG Client\fwctool.exe disable", vbHide)
     
-    ' abre o bloco de notas com o texto criado
+    
     'x = Shell("C:\Program Files\LANDesk\ManagementSuite\isscntr.exe" & " " & "/a" & str_num_ip & " " & "/crunas /u:suporte cmd", vbNormalNoFocus)
+    'executa a transferencia de arquivos do Landesk com o IP fornecido
     x = Shell("C:\Program Files\LANDesk\ManagementSuite\isscntr.exe" & " " & "/a" & str_num_ip & " " & "/c""file transfer""", vbNormalNoFocus)
 End Sub

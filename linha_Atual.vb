@@ -1,7 +1,6 @@
-Attribute VB_Name = "linha_Atual"
 Option Explicit
 Public Function linha_Atual() As Integer
-'usar : variavelTipoInt = linha_Atual.linha_Atual
+'get actual line number, works only up to colunm Z
 Dim addr_lin As Integer
 Dim addr_vlr As String
 

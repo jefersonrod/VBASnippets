@@ -40,6 +40,8 @@ Sub Abre_share()
      'Z = Shell(strcmd, vbNormalFocus)
      
      'y = Shell("cmd /c time /t>c:\share-ini.txt")
+	 
+	 'executa o comando pelo cmd
      x = Shell("cmd /c start \\" & str_num_ip & "\c\temp", vbNormalFocus)
      
      'y = Shell("cmd /c time /t>c:\share-end.txt")

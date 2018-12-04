@@ -1,7 +1,9 @@
 Sub GeraContentCardTrello()
+'get info from sheet and generate card in Trello
 On Error Resume Next
 On Error GoTo 0
 
+'set general vars
 Dim plan As String
 Dim corpo As String
 Dim linhaAtual As Integer
@@ -27,7 +29,7 @@ Dim corAzul As String
 Dim corAzulMarinho As String
 Dim corAzulMarinhoCode As String
 
-
+'set general vars
 plan = FunctionsTimeModelX.ActualSheetName
 nl = vbCrLf 'new line
 corAzul = RGB(105, 134, 206) 'blue color done action
@@ -47,7 +49,7 @@ colfoneRespLoja = 7
 colProblema = 8
 colSolucao = 9
 
-'get atual
+'get actual line
 linhaAtual = linha_Atual.linha_Atual
 
         'Check main fields
@@ -81,7 +83,7 @@ linhaAtual = linha_Atual.linha_Atual
         foneRespLoja = Worksheets(plan).Cells(linhaAtual, colfoneRespLoja)
         Problema = Worksheets(plan).Cells(linhaAtual, colProblema)
         solucao = Worksheets(plan).Cells(linhaAtual, colSolucao)
-        'MsgBox (linhaAtual)
+        
     End If
     
     'Check secondary fields

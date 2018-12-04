@@ -1,9 +1,8 @@
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
-
-If ActiveSheet.Name = "Atendimentos Migração V-Sat.xlsm" Then
-
+Dim plan As String
+plan = ActualSheetName 'obtem o nome da planilha atual
+If ActiveSheet.name = plan Then
     Cancel = True
-    
 End If
 
 End Sub
