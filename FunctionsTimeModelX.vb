@@ -35,9 +35,10 @@ Dim port As String
 Dim urlAdd As String
 Dim urlGet As String
 Dim sJSONString As String
+Dim EnableSrvMsg As Boolean
+Dim linhaConfig As Integer
 
 'set config.ini vars
-Dim linhaConfig As Integer
 Dim colColID As Integer
 Dim colPlan As Integer
 Dim colEmailBoardTrello As Integer
@@ -66,7 +67,7 @@ dia = Date
 dia = Replace(dia, "/", "%2F")
 hora = Time
 hora = Replace(hora, ":", "%3A")
-
+EnableSrvMsg = Worksheets("config.ini").Cells(linhaConfig, 6) 'verifica se grava o stsatus do atendimento
 'build url get string
 urlGet = urlAdd + "/add/" + col + "/" + analista + "/" + loja + "/" + dia + "/" + hora
 Debug.Print urlGet
@@ -80,7 +81,7 @@ If (checkServer(urlAdd)) Then
     sJSONString = .ResponseText
     End With
 Else
-    MsgBox ("Error 404" + nl + "Server Down" + nl + "Plz check")
+    If (EnableSrvMsg) Then MsgBox ("Error 404" + nl + "Server Down" + nl + "Plz check")
 End If
 
 'Debug.Print sJSONString
@@ -99,6 +100,8 @@ Dim port As String
 Dim urlDisp As String
 Dim urlGet As String
 Dim sJSONString As String
+Dim MyREquest As Object
+
 
 'set config.ini vars
 Dim linhaConfig As Integer
@@ -131,16 +134,16 @@ Debug.Print urlGet
 'check if server is available
 If (checkServer(urlDisp)) Then
     'MsgBox ("OK")
-    With CreateObject("MSXML2.XMLHTTP")
-    .Open "GET", urlGet, False
-    .Send
-    sJSONString = .ResponseText
-    End With
+    Set MyREquest = CreateObject("WinHttp.WinHttpRequest.5.1")
+    MyREquest.Open "GET", urlGet
+    MyREquest.Send
+    sJSONString = MyREquest.ResponseText
+    
 Else
     MsgBox ("Error 404" + nl + "Server Down" + nl + "Plz check")
 End If
 
-'Debug.Print sJSONString
+Debug.Print sJSONString
     
 End Function
 
@@ -204,7 +207,7 @@ userlogged = Environ$("UserName")
 GetUserLogged = userlogged
 End Function
 
-Public Function checkServer(Url As String) As Boolean
+Public Function checkServer(url As String) As Boolean
 'function to check url online
 Dim Request As Object
 Dim ff As Integer
@@ -214,7 +217,7 @@ On Error GoTo EndNow
 Set Request = CreateObject("WinHttp.WinHttpRequest.5.1")
     
 With Request
-   .Open "GET", Url, False
+   .Open "GET", url, False
    .Send
     rc = .StatusText
 End With
@@ -223,3 +226,41 @@ If rc = "OK" Then checkServer = True Else checkServer = False
 EndNow:
 End Function
 
+Public Function GetAPIMAC(urlMAC As String) As String
+Dim ORequest As WinHttp.WinHttpRequest
+Dim sResult As String
+Dim sResultCode As String
+Dim plan As String
+Dim linhaAtual As Integer
+Dim ErrorString As String
+On Error GoTo Err_DoSomeJob
+Set ORequest = New WinHttp.WinHttpRequest
+
+plan = FunctionsTimeModelX.ActualSheetName
+linhaAtual = linha_Atual.linha_Atual
+
+With ORequest
+    .Open "GET", urlMAC, True
+    .SetRequestHeader "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"
+    .Send ""
+    .WaitForResponse
+    sResult = .ResponseText
+    Debug.Print (sResult)
+    'MsgBox (sResult)
+    sResultCode = ORequest.Status
+    Debug.Print (sResultCode)
+    'MsgBox (sResult)
+    If sResultCode = 404 Then sResult = "Fornecedor desconhecido/Não cadastrado"
+End With
+
+Err_DoSomeJob:
+    'MsgBox Err.Description, vbExclamation, Err.Number
+    ErrorString = Err.Description
+    If Right$(ErrorString, 2) = vbCrLf Or Right$(ErrorString, 2) = vbNewLine Then
+        ErrorString = Left$(ErrorString, Len(ErrorString) - 2)
+        Debug.Print ErrorString
+    End If
+    Debug.Print ErrorString
+    
+    GetAPIMAC = sResult
+End Function
