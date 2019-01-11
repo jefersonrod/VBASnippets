@@ -6,8 +6,9 @@ On Error GoTo 0
 'set general vars
 Dim plan As String
 Dim corpo As String
-
-Dim loja As String
+Dim colNum As Integer
+Dim colSelect As String
+Dim Loja As String
 Dim lojaCodigo As String
 Dim line As String
 Dim checkin As String
@@ -27,56 +28,79 @@ Dim seHouverMaisItensRESP As String
 
 'set general vars
 plan = FunctionsTimeModelX.ActualSheetName
+colSelect = coluna_Atual.coluna_Atual
 nl = vbCrLf 'new line
 line = "---------------------------------"
 checkin = "*Check-In*"
 checkout = "*Check-Out*"
 
+
+If (colSelect = "C") Then
+    'Ivan
+    colNum = 3
+ElseIf (colSelect = "G") Then
+    'Jeferson
+    colNum = 7
+ElseIf (colSelect = "K") Then
+    'Luiz
+    colNum = 11
+ElseIf (colSelect = "O") Then
+    'Rener
+    colNum = 15
+ElseIf (colSelect = "S") Then
+    'Thiago
+    colNum = 19
+    
+Else
+    MsgBox ("Coluna selecionada " + colSelect + " é invalida, verifique")
+    Exit Sub
+End If
+
     'Check loja field
-    If (Worksheets(plan).Cells(5, 3) = "") Then
+    If (Worksheets(plan).Cells(5, colNum) = "") Then
         MsgBox ("Favor preencher o numero da loja na linha 5")
-        Worksheets(plan).Cells(5, 3).Select
+        Worksheets(plan).Cells(5, colNum).Select
         Exit Sub
         
     Else
         'check tecnico answer
-        If (Worksheets(plan).Cells(9, 3) = "") Then
+        If (Worksheets(plan).Cells(9, colNum) = "") Then
             MsgBox ("Favor preencher a linha 9")
-            Worksheets(plan).Cells(9, 3).Select
+            Worksheets(plan).Cells(9, colNum).Select
             Exit Sub
         End If
         
         
         'check responsavel field
         For i = 13 To 17 Step 2
-            If (Worksheets(plan).Cells(i, 3) = "") Then
+            If (Worksheets(plan).Cells(i, colNum) = "") Then
             MsgBox ("Favor preencher a linha " + CStr(i))
-            Worksheets(plan).Cells(i, 3).Select
+            Worksheets(plan).Cells(i, colNum).Select
             Exit Sub
             End If
         Next i
         
-        loja = Worksheets(plan).Cells(4, 3)
-        lojaCodigo = Worksheets(plan).Cells(5, 3)
+        Loja = Worksheets(plan).Cells(4, colNum)
+        lojaCodigo = Worksheets(plan).Cells(5, colNum)
         'Técnico
-        tecnico = Worksheets(plan).Cells(7, 3)
-        aPrimesysDeuasOrientacoes = Worksheets(plan).Cells(8, 3)
-        aPrimesysDeuasOrientacoesRESP = Worksheets(plan).Cells(9, 3)
+        tecnico = Worksheets(plan).Cells(7, colNum)
+        aPrimesysDeuasOrientacoes = Worksheets(plan).Cells(8, colNum)
+        aPrimesysDeuasOrientacoesRESP = Worksheets(plan).Cells(9, colNum)
         'Responsavel
-        responsavel = Worksheets(plan).Cells(11, 3)
-        casoHajaumProblemaOcorrido = Worksheets(plan).Cells(12, 3)
-        casoHajaumProblemaOcorridoRESP = Worksheets(plan).Cells(13, 3)
-        solicitarUmaAvaliacaodoTecnico = Worksheets(plan).Cells(14, 3)
-        solicitarUmaAvaliacaodoTecnicoRESP = Worksheets(plan).Cells(15, 3)
-        seHouverMaisItens = Worksheets(plan).Cells(16, 3)
-        seHouverMaisItensRESP = Worksheets(plan).Cells(17, 3)
+        responsavel = Worksheets(plan).Cells(11, colNum)
+        casoHajaumProblemaOcorrido = Worksheets(plan).Cells(12, colNum)
+        casoHajaumProblemaOcorridoRESP = Worksheets(plan).Cells(13, colNum)
+        solicitarUmaAvaliacaodoTecnico = Worksheets(plan).Cells(14, colNum)
+        solicitarUmaAvaliacaodoTecnicoRESP = Worksheets(plan).Cells(15, colNum)
+        seHouverMaisItens = Worksheets(plan).Cells(16, colNum)
+        seHouverMaisItensRESP = Worksheets(plan).Cells(17, colNum)
         
     End If
     
     'generate content text
     
     corpo = checkout + nl + _
-            loja + lojaCodigo + nl + nl + _
+            Loja + lojaCodigo + nl + nl + _
             tecnico + nl + nl + _
             aPrimesysDeuasOrientacoes + nl + _
             aPrimesysDeuasOrientacoesRESP + nl + nl + _
