@@ -5,15 +5,18 @@ On Error GoTo 0
 
 'set general vars
 Dim plan As String
+Dim analista As String
+Dim registrado As String
 Dim corpo As String
 Dim colNum As Integer
 Dim colSelect As String
-Dim Loja As String
+Dim loja As String
 Dim lojaCodigo As String
 Dim line As String
 Dim checkin As String
 Dim checkout As String
 Dim formCheckin As String
+
 'Técnico
 Dim tecnico As String
 Dim recebeuContatodaPrimesys As String
@@ -51,19 +54,19 @@ checkin = "*Check-In*"
 checkout = "*Check-Out*"
 
 If (colSelect = "C") Then
-    'Ivan
+    analista = "Ivan"
     colNum = 3
 ElseIf (colSelect = "G") Then
-    'Jeferson
+    analista = "Jeferson"
     colNum = 7
 ElseIf (colSelect = "K") Then
-    'Luiz
+    analista = "Luiz"
     colNum = 11
 ElseIf (colSelect = "O") Then
-    'Rener
+    analista = "Rener"
     colNum = 15
 ElseIf (colSelect = "S") Then
-    'Thiago
+    analista = "Thiago"
     colNum = 19
     
 Else
@@ -99,7 +102,7 @@ End If
             
         Next i
         
-        Loja = Worksheets(plan).Cells(4, colNum)
+        loja = Worksheets(plan).Cells(4, colNum)
         lojaCodigo = Worksheets(plan).Cells(5, colNum)
         'Técnico
         tecnico = Worksheets(plan).Cells(7, colNum)
@@ -135,7 +138,7 @@ End If
     'generate content text
     
     corpo = checkin + nl + _
-            Loja + lojaCodigo + nl + nl + _
+            loja + lojaCodigo + nl + nl + _
             tecnico + nl + nl + _
             recebeuContatodaPrimesys + nl + _
             recebeuContatodaPrimesysRESP + nl + _
@@ -160,7 +163,8 @@ End If
             orientarAssinarOSSomenteApos + nl + _
             orientarAssinarOSSomenteAposRESP + nl + confirmaroNumerodoTelefone + nl + confirmaroNumerodoTelefoneRESP
             
-    
+    registrado = FunctionsTimeModelX.Username
+    Call CheckLogIN.CheckLogIN(analista, lojaCodigo, recebeuContatodaPrimesysRESP, recebeuOrientacõesSobreoManualdeMigracaoRESP, jaRealizouMigracaoRESP, possuiWhatsappQualRESP, informarSobreoLinkqueEstaSendoInstaladoRESP, envioFotosRackRetaguardaBalcaoRESP, InformarSobreAcompanhamentoRESP, temAlgumChamadoAbertoRESP, estaComAlgumProblemaSistemicoRESP, orientarAssinarOSSomenteAposRESP, confirmaroNumerodoTelefoneRESP, registrado)
     'generate content
     CopyText corpo 'call copy to clipboard function
     

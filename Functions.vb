@@ -55,7 +55,7 @@ Public Function CreateStatusHTML()
     colData = 1
     colHora = 2
     colLoja = 3
-    
+     
     'get atual
     linhaatual = linha_Atual.linha_Atual
     

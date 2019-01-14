@@ -5,10 +5,12 @@ On Error GoTo 0
 
 'set general vars
 Dim plan As String
+Dim analista As String
+Dim registrado As String
 Dim corpo As String
 Dim colNum As Integer
 Dim colSelect As String
-Dim Loja As String
+Dim loja As String
 Dim lojaCodigo As String
 Dim line As String
 Dim checkin As String
@@ -36,19 +38,19 @@ checkout = "*Check-Out*"
 
 
 If (colSelect = "C") Then
-    'Ivan
+    analista = "Ivan"
     colNum = 3
 ElseIf (colSelect = "G") Then
-    'Jeferson
+    analista = "Jeferson"
     colNum = 7
 ElseIf (colSelect = "K") Then
-    'Luiz
+    analista = "Luiz"
     colNum = 11
 ElseIf (colSelect = "O") Then
-    'Rener
+    analista = "Rener"
     colNum = 15
 ElseIf (colSelect = "S") Then
-    'Thiago
+    analista = "Thiago"
     colNum = 19
     
 Else
@@ -80,7 +82,7 @@ End If
             End If
         Next i
         
-        Loja = Worksheets(plan).Cells(4, colNum)
+        loja = Worksheets(plan).Cells(4, colNum)
         lojaCodigo = Worksheets(plan).Cells(5, colNum)
         'Técnico
         tecnico = Worksheets(plan).Cells(7, colNum)
@@ -100,7 +102,7 @@ End If
     'generate content text
     
     corpo = checkout + nl + _
-            Loja + lojaCodigo + nl + nl + _
+            loja + lojaCodigo + nl + nl + _
             tecnico + nl + nl + _
             aPrimesysDeuasOrientacoes + nl + _
             aPrimesysDeuasOrientacoesRESP + nl + nl + _
@@ -113,7 +115,8 @@ End If
             seHouverMaisItens + nl + _
             seHouverMaisItensRESP + nl
             
-    
+    registrado = FunctionsTimeModelX.Username
+    Call CheckLogOUT.CheckLogOUT(analista, lojaCodigo, aPrimesysDeuasOrientacoesRESP, casoHajaumProblemaOcorridoRESP, solicitarUmaAvaliacaodoTecnicoRESP, seHouverMaisItensRESP, registrado)
     'generate content
     CopyText corpo 'call copy to clipboard function
     
