@@ -4,7 +4,7 @@ Sub SingleHC ()
 addr_line = Read Address()
 if addr_line = 1 Then MsgBox ("Selected Cell is first row, don't use this") : End
 Dim sUrl As String
-Url = Worksheets ("HC").Cells(addr_line, 3)
+sUrl = Worksheets ("HC").Cells(addr_line, 3)
 if sUrl = "" Then MsgBox ("Please fill the URL field to check") : End
 Dim ORequest As WinHttp. WinHttpRequest
 Dim sResult As String
