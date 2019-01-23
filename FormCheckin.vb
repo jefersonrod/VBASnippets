@@ -16,6 +16,13 @@ Dim line As String
 Dim checkin As String
 Dim checkout As String
 Dim formCheckin As String
+Dim usuarioAtual As String
+Dim ivan As String
+Dim jeferson As String
+Dim luiz As String
+Dim rener As String
+Dim thiago As String
+
 
 'Técnico
 Dim tecnico As String
@@ -46,31 +53,38 @@ Dim confirmaroNumerodoTelefone As String
 Dim confirmaroNumerodoTelefoneRESP As String
 
 'set general vars
+ivan = "Ivan Erison Gambarra da Silva"
+jeferson = "Jeferson Rodrigues"
+luiz = "Luiz Victor Lomba de Oliveira"
+rener = "Renervaldo Wizenffat"
+thiago = "Thiago Hiroshi Da Silva Endo"
 plan = FunctionsTimeModelX.ActualSheetName
 colSelect = coluna_Atual.coluna_Atual
+registrado = FunctionsTimeModelX.Username
+usuarioAtual = FunctionsTimeModelX.Username
 nl = vbCrLf 'new line
 line = "---------------------------------"
 checkin = "*Check-In*"
 checkout = "*Check-Out*"
 
-If (colSelect = "C") Then
+If (colSelect = "C" And usuarioAtual = ivan) Then
     analista = "Ivan"
     colNum = 3
-ElseIf (colSelect = "G") Then
+ElseIf (colSelect = "G" And usuarioAtual = jeferson) Then
     analista = "Jeferson"
     colNum = 7
-ElseIf (colSelect = "K") Then
+ElseIf (colSelect = "K" And usuarioAtual = luiz) Then
     analista = "Luiz"
     colNum = 11
-ElseIf (colSelect = "O") Then
+ElseIf (colSelect = "O" And usuarioAtual = rener) Then
     analista = "Rener"
     colNum = 15
-ElseIf (colSelect = "S") Then
+ElseIf (colSelect = "S" And usuarioAtual = thiago) Then
     analista = "Thiago"
     colNum = 19
     
 Else
-    MsgBox ("Coluna selecionada " + colSelect + " é invalida, verifique")
+    MsgBox ("Ola " + usuarioAtual + " coluna selecionada " + colSelect + " é invalida, verifique")
     Exit Sub
 End If
     
@@ -163,7 +177,7 @@ End If
             orientarAssinarOSSomenteApos + nl + _
             orientarAssinarOSSomenteAposRESP + nl + confirmaroNumerodoTelefone + nl + confirmaroNumerodoTelefoneRESP
             
-    registrado = FunctionsTimeModelX.Username
+    
     Call CheckLogIN.CheckLogIN(analista, lojaCodigo, recebeuContatodaPrimesysRESP, recebeuOrientacõesSobreoManualdeMigracaoRESP, jaRealizouMigracaoRESP, possuiWhatsappQualRESP, informarSobreoLinkqueEstaSendoInstaladoRESP, envioFotosRackRetaguardaBalcaoRESP, InformarSobreAcompanhamentoRESP, temAlgumChamadoAbertoRESP, estaComAlgumProblemaSistemicoRESP, orientarAssinarOSSomenteAposRESP, confirmaroNumerodoTelefoneRESP, registrado)
     'generate content
     CopyText corpo 'call copy to clipboard function
