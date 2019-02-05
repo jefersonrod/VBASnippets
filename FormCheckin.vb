@@ -22,10 +22,11 @@ Dim jeferson As String
 Dim luiz As String
 Dim rener As String
 Dim thiago As String
-
-
+Dim datahoraAtual As Date
+Dim tipo As String
 'Técnico
 Dim tecnico As String
+Dim nomeTecnico As String
 Dim recebeuContatodaPrimesys As String
 Dim recebeuContatodaPrimesysRESP As String
 Dim recebeuOrientacõesSobreoManualdeMigracao As String
@@ -41,6 +42,7 @@ Dim envioFotosRackRetaguardaBalcaoRESP As String
 
 'Responsavel
 Dim resposavel As String
+Dim nR As String
 Dim InformarSobreAcompanhamento As String
 Dim InformarSobreAcompanhamentoRESP As String
 Dim temAlgumChamadoAberto As String
@@ -65,7 +67,7 @@ usuarioAtual = FunctionsTimeModelX.Username
 nl = vbCrLf 'new line
 line = "---------------------------------"
 checkin = "*Check-In*"
-checkout = "*Check-Out*"
+tipo = "CheckIN"
 
 If (colSelect = "C" And usuarioAtual = ivan) Then
     analista = "Ivan"
@@ -97,7 +99,7 @@ End If
         
     Else
         'check tecnico answer
-        For i = 9 To 19 Step 2
+        For i = 7 To 19 Step 2
             If (Worksheets(plan).Cells(i, colNum) = "") Then
             MsgBox ("Favor preencher a linha " + CStr(i))
             Worksheets(plan).Cells(i, colNum).Select
@@ -107,7 +109,7 @@ End If
         Next i
         
         'check responsavel field
-        For i = 23 To 31 Step 2
+        For i = 21 To 31 Step 2
             If (Worksheets(plan).Cells(i, colNum) = "") Then
             MsgBox ("Favor preencher a linha " + CStr(i))
             Worksheets(plan).Cells(i, colNum).Select
@@ -119,7 +121,8 @@ End If
         loja = Worksheets(plan).Cells(4, colNum)
         lojaCodigo = Worksheets(plan).Cells(5, colNum)
         'Técnico
-        tecnico = Worksheets(plan).Cells(7, colNum)
+        tecnico = Worksheets(plan).Cells(6, colNum)
+        nomeTecnico = Worksheets(plan).Cells(7, colNum)
         recebeuContatodaPrimesys = Worksheets(plan).Cells(8, colNum)
         recebeuContatodaPrimesysRESP = Worksheets(plan).Cells(9, colNum)
         recebeuOrientacõesSobreoManualdeMigracao = Worksheets(plan).Cells(10, colNum)
@@ -133,7 +136,8 @@ End If
         envioFotosRackRetaguardaBalcao = Worksheets(plan).Cells(18, colNum)
         envioFotosRackRetaguardaBalcaoRESP = Worksheets(plan).Cells(19, colNum)
         'Responsavel
-        responsavel = Worksheets(plan).Cells(21, colNum)
+        responsavel = Worksheets(plan).Cells(20, colNum)
+        nR = Worksheets(plan).Cells(21, colNum)
         InformarSobreAcompanhamento = Worksheets(plan).Cells(22, colNum)
         InformarSobreAcompanhamentoRESP = Worksheets(plan).Cells(23, colNum)
         temAlgumChamadoAberto = Worksheets(plan).Cells(24, colNum)
@@ -150,7 +154,6 @@ End If
     
     
     'generate content text
-    
     corpo = checkin + nl + _
             loja + lojaCodigo + nl + nl + _
             tecnico + nl + nl + _
@@ -175,10 +178,10 @@ End If
             estaComAlgumProblemaSistemico + nl + _
             estaComAlgumProblemaSistemicoRESP + nl + _
             orientarAssinarOSSomenteApos + nl + _
-            orientarAssinarOSSomenteAposRESP + nl + confirmaroNumerodoTelefone + nl + confirmaroNumerodoTelefoneRESP
-            
+            orientarAssinarOSSomenteAposRESP + nl + confirmaroNumerodoTelefone + nl + confirmaroNumerodoTelefoneRESP + nl + CStr(datahoraAtual) + nl + registrado
     
-    Call CheckLogIN.CheckLogIN(analista, lojaCodigo, recebeuContatodaPrimesysRESP, recebeuOrientacõesSobreoManualdeMigracaoRESP, jaRealizouMigracaoRESP, possuiWhatsappQualRESP, informarSobreoLinkqueEstaSendoInstaladoRESP, envioFotosRackRetaguardaBalcaoRESP, InformarSobreAcompanhamentoRESP, temAlgumChamadoAbertoRESP, estaComAlgumProblemaSistemicoRESP, orientarAssinarOSSomenteAposRESP, confirmaroNumerodoTelefoneRESP, registrado)
+    Call CheckLogIN.CheckLogIN(analista, lojaCodigo, recebeuContatodaPrimesysRESP, recebeuOrientacõesSobreoManualdeMigracaoRESP, jaRealizouMigracaoRESP, possuiWhatsappQualRESP, informarSobreoLinkqueEstaSendoInstaladoRESP, envioFotosRackRetaguardaBalcaoRESP, InformarSobreAcompanhamentoRESP, temAlgumChamadoAbertoRESP, estaComAlgumProblemaSistemicoRESP, orientarAssinarOSSomenteAposRESP, confirmaroNumerodoTelefoneRESP, registrado, nomeTecnico, nR)
+    Call TrelloCheckin.TrelloCheckin(tipo, analista, lojaCodigo, recebeuContatodaPrimesysRESP, recebeuOrientacõesSobreoManualdeMigracaoRESP, jaRealizouMigracaoRESP, possuiWhatsappQualRESP, informarSobreoLinkqueEstaSendoInstaladoRESP, envioFotosRackRetaguardaBalcaoRESP, InformarSobreAcompanhamentoRESP, temAlgumChamadoAbertoRESP, estaComAlgumProblemaSistemicoRESP, orientarAssinarOSSomenteAposRESP, confirmaroNumerodoTelefoneRESP, registrado, nomeTecnico, nR)
     'generate content
     CopyText corpo 'call copy to clipboard function
     

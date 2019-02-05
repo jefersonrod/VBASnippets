@@ -21,6 +21,9 @@ Dim jeferson As String
 Dim luiz As String
 Dim rener As String
 Dim thiago As String
+Dim br As String
+Dim tipo As String
+Dim corpoHTML As String
 'Técnico
 Dim tecnico As String
 Dim aPrimesysDeuasOrientacoes As String
@@ -45,8 +48,9 @@ colSelect = coluna_Atual.coluna_Atual
 registrado = FunctionsTimeModelX.Username
 usuarioAtual = FunctionsTimeModelX.Username
 nl = vbCrLf 'new line
-line = "---------------------------------"
-checkin = "*Check-In*"
+br = "<br>"
+line = "---"
+tipo = "CheckOUT"
 checkout = "*Check-Out*"
 
 
@@ -128,8 +132,24 @@ End If
             seHouverMaisItens + nl + _
             seHouverMaisItensRESP + nl
             
+    corpoHTML = checkout + br + _
+            "##" + loja + lojaCodigo + "##" + br + br + _
+            tecnico + br + br + _
+            aPrimesysDeuasOrientacoes + br + _
+            aPrimesysDeuasOrientacoesRESP + br + br + _
+            line + br + _
+            responsavel + br + br + _
+            casoHajaumProblemaOcorrido + br + _
+            casoHajaumProblemaOcorridoRESP + br + _
+            solicitarUmaAvaliacaodoTecnico + br + _
+            solicitarUmaAvaliacaodoTecnicoRESP + br + _
+            seHouverMaisItens + br + _
+            seHouverMaisItensRESP + br
+            
     registrado = FunctionsTimeModelX.Username
     Call CheckLogOUT.CheckLogOUT(analista, lojaCodigo, aPrimesysDeuasOrientacoesRESP, casoHajaumProblemaOcorridoRESP, solicitarUmaAvaliacaodoTecnicoRESP, seHouverMaisItensRESP, registrado)
+    
+    Call TrelloCheckout.TrelloCheckout(tipo, analista, lojaCodigo, corpoHTML, registrado)
     'generate content
     CopyText corpo 'call copy to clipboard function
     
